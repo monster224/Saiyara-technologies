@@ -330,43 +330,44 @@
 /*awards*/
 
 .awards-section {
-  padding: 70px 0;
+  padding: 70px 15px;
   text-align: center;
 }
 
 .awards-title {
-  font-size: 42px;
+  font-size: clamp(26px, 5vw, 42px);
   font-weight: 700;
-  margin-bottom: 50px;
+  margin-bottom: 40px;
   color: #fff;
 }
 
 .awards-container {
   position: relative;
-  max-width: 950px;
+  max-width: 1100px;
   margin: auto;
   display: flex;
   align-items: center;
-  justify-content: center;
 }
 
 .awards-slider {
   display: flex;
-  gap: 40px;
+  gap: 30px;
   overflow: hidden;
   scroll-behavior: smooth;
+  width: 100%;
 }
 
+/* CARD */
 .award-card {
-  min-width: 180px;
+  flex: 0 0 calc(25% - 22px); /* desktop */
   height: 180px;
   border-radius: 20px;
   background: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 18px;
-  transition: transform 0.5s ease, opacity 0.5s ease;
+  padding: 16px;
+  transition: transform 0.4s ease;
 }
 
 .award-card img {
@@ -375,27 +376,48 @@
   object-fit: contain;
 }
 
-/* Arrows */
+/* ARROWS */
 .arrow-btn {
-  background: transparent;
+  background: none;
   border: none;
   cursor: pointer;
-  font-size: 45px;
+  font-size: 42px;
   color: #00c7a6;
   transition: 0.3s;
+  flex-shrink: 0;
 }
 
 .arrow-btn:hover {
   color: #00e6c2;
 }
 
-.left {
-  margin-right: 25px;
+/* =========================
+   TABLET
+========================= */
+@media (max-width: 900px) {
+  .award-card {
+    flex: 0 0 calc(33.333% - 20px);
+  }
 }
 
-.right {
-  margin-left: 25px;
+/* =========================
+   MOBILE
+========================= */
+@media (max-width: 600px) {
+  .awards-container {
+    gap: 10px;
+  }
+
+  .award-card {
+    flex: 0 0 100%;
+    height: 150px;
+  }
+
+  .arrow-btn {
+    font-size: 34px;
+  }
 }
+
 /*vedio*/
 
 .brand-strip-section {
@@ -458,6 +480,8 @@
 
 /*revi*/
 
+/* ================= BASE DESIGN ================= */
+
 .reviews-section {
   text-align: center;
   padding: 60px 0;
@@ -476,7 +500,6 @@
 }
 
 .review-slider-wrapper {
-  width: 100%;
   overflow: hidden;
   border-radius: 20px;
 }
@@ -506,7 +529,6 @@
 
 .review p {
   font-size: 22px;
-  margin-bottom: 20px;
 }
 
 .review h4 {
@@ -519,7 +541,7 @@
   opacity: 0.7;
 }
 
-/* Arrows */
+/* ARROWS */
 .review-arrow {
   position: absolute;
   top: 50%;
@@ -528,18 +550,12 @@
   background: none;
   border: none;
   cursor: pointer;
-  padding: 10px;
 }
 
-.review-arrow.left {
-  left: -40px;
-}
+.review-arrow.left { left: -40px; }
+.review-arrow.right { right: -40px; }
 
-.review-arrow.right {
-  right: -40px;
-}
-
-/* Dots */
+/* DOTS */
 .review-dots {
   margin-top: 20px;
   display: flex;
@@ -552,15 +568,43 @@
   height: 12px;
   background: #bbb;
   border-radius: 50%;
-  cursor: pointer;
 }
 
 .review-dots .dot.active {
   background: #0047ff;
 }
 
+/* ================= RESPONSIVE (SAFE) ================= */
+
+/* Tablet */
+@media (max-width: 992px) {
+  .reviews-container { width: 90%; }
+}
+
+/* Mobile ONLY */
+@media (max-width: 768px) {
+  .review {
+    text-align: center;
+    padding: 30px 25px;
+  }
+
+  .review img {
+    position: static;
+    margin: 20px auto 0;
+    display: block;
+  }
+
+  .review-arrow.left { left: -20px; }
+  .review-arrow.right { right: -20px; }
+}
+
+
 
 /*achivments*/
+
+/* =========================
+   BASE DESIGN (UNCHANGED)
+========================= */
 
 .achievements {
   background: #000;
@@ -637,6 +681,37 @@
   line-height: 1.4;
   font-weight: 500;
 }
+
+/* =========================
+   RESPONSIVE (DESIGN SAME)
+========================= */
+
+/* Tablet */
+@media (max-width: 992px) {
+  .achievements {
+    padding: 60px 6%;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .achievements {
+    flex-direction: column;
+  }
+
+  .achievements-left,
+  .achievements-right {
+    width: 100%;
+  }
+}
+
+/* Small Mobile */
+@media (max-width: 480px) {
+  .achievements-right {
+    grid-template-columns: 1fr;
+  }
+}
+
 /*featuers*/
 .blog-slider-section {
   width: 100%;
@@ -1400,77 +1475,91 @@ const slider = document.getElementById("awardsSlider");
 const prev = document.getElementById("awardPrev");
 const next = document.getElementById("awardNext");
 
-const cardWidth = 220; // 180 card + 40 gap
+let autoSlide;
 
-// Manual Controls
-next.onclick = () => slideNext();
-prev.onclick = () => slidePrev();
+// Calculate width dynamically
+function getCardWidth() {
+  const card = slider.querySelector(".award-card");
+  const gap = parseInt(getComputedStyle(slider).gap) || 0;
+  return card.offsetWidth + gap;
+}
 
 function slideNext() {
-  slider.scrollLeft += cardWidth;
+  slider.scrollLeft += getCardWidth();
 
-  // Loop back to start
   if (slider.scrollLeft + slider.clientWidth >= slider.scrollWidth - 5) {
-    setTimeout(() => slider.scrollLeft = 0, 300);
+    setTimeout(() => (slider.scrollLeft = 0), 300);
   }
 }
 
 function slidePrev() {
-  slider.scrollLeft -= cardWidth;
+  slider.scrollLeft -= getCardWidth();
 
-  // Loop to end
   if (slider.scrollLeft <= 0) {
-    setTimeout(() => slider.scrollLeft = slider.scrollWidth, 300);
+    setTimeout(() => (slider.scrollLeft = slider.scrollWidth), 300);
   }
 }
 
-// Auto Slide Every 2.5 seconds
-setInterval(() => {
+next.onclick = () => {
+  stopAuto();
   slideNext();
-}, 2500);
+  startAuto();
+};
+
+prev.onclick = () => {
+  stopAuto();
+  slidePrev();
+  startAuto();
+};
+
+function startAuto() {
+  autoSlide = setInterval(slideNext, 2500);
+}
+
+function stopAuto() {
+  clearInterval(autoSlide);
+}
+
+slider.addEventListener("mouseenter", stopAuto);
+slider.addEventListener("mouseleave", startAuto);
+
+startAuto();
+
 
 //reviw
 
 let reviewIndex = 0;
-
 const reviewSlider = document.getElementById("reviewSlider");
 const reviewSlides = reviewSlider.children;
-const totalReviewSlides = reviewSlides.length;
+const dots = document.getElementById("reviewDots");
 
-const reviewDotsContainer = document.getElementById("reviewDots");
-
-for (let i = 0; i < totalReviewSlides; i++) {
-  const dot = document.createElement("div");
-  dot.classList.add("dot");
-  if (i === 0) dot.classList.add("active");
-  dot.onclick = () => goToReview(i);
-  reviewDotsContainer.appendChild(dot);
+for (let i = 0; i < reviewSlides.length; i++) {
+  const d = document.createElement("div");
+  d.className = "dot";
+  if (i === 0) d.classList.add("active");
+  d.onclick = () => goToReview(i);
+  dots.appendChild(d);
 }
 
-function updateReviewSlider() {
+function updateReview() {
   reviewSlider.style.transform = `translateX(-${reviewIndex * 100}%)`;
-
-  document.querySelectorAll("#reviewDots .dot").forEach((d, i) => {
-    d.classList.toggle("active", i === reviewIndex);
-  });
+  document.querySelectorAll(".dot").forEach((d, i) =>
+    d.classList.toggle("active", i === reviewIndex)
+  );
 }
 
 function nextReview() {
-  reviewIndex = (reviewIndex + 1) % totalReviewSlides;
-  updateReviewSlider();
+  reviewIndex = (reviewIndex + 1) % reviewSlides.length;
+  updateReview();
 }
 
 function prevReview() {
-  reviewIndex = (reviewIndex - 1 + totalReviewSlides) % totalReviewSlides;
-  updateReviewSlider();
-}
-
-function goToReview(index) {
-  reviewIndex = index;
-  updateReviewSlider();
+  reviewIndex = (reviewIndex - 1 + reviewSlides.length) % reviewSlides.length;
+  updateReview();
 }
 
 setInterval(nextReview, 4000);
+
 
 //feature
 
