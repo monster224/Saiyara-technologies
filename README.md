@@ -58,15 +58,7 @@
   overflow: hidden;
 }
 
- .logo{
-   width:50px;
-   height:44px;
-   border-radius:10px;
-   display:flex;
-   align-items:center;
-   justify-content:center;
-   color:white;
-   background:linear-gradient(135deg,#6366f1,#ec4899);font-weight:800}
+ 
 
 /* Hide name initially */
 .brand-name {
@@ -108,9 +100,15 @@
     .container{max-width:1100px;margin:0 auto;padding:20px}
 
     /* Header */
-  * { box-sizing: border-box; }
-body {
+  * {
+  box-sizing: border-box;
   margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  overflow-x: hidden;
   font-family: Arial, sans-serif;
   background: #000;
   color: #fff;
@@ -121,21 +119,45 @@ body {
   position: sticky;
   top: 0;
   z-index: 999;
-  background: rgba(0,0,0,.9);
+  background: rgba(0,0,0,0.9);
   backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(255,255,255,.08);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
 }
 
 .nav-container {
+  max-width: 1280px;
+  margin: auto;
+  padding: 6px 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 14px 28px;
 }
 
-/* LOGO */
+/* BRAND */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
 
-/* LINKS */
+.logo{
+   width:50px;
+   height:44px;
+   border-radius:10px;
+   display:flex;
+   align-items:center;
+   justify-content:center;
+   color:white;
+   background:linear-gradient(135deg,#6366f1,#ec4899);font-weight:800}
+
+
+.brand-name {
+  font-size: 16px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* NAV LINKS */
 .nav-links {
   display: flex;
   gap: 26px;
@@ -149,22 +171,23 @@ body {
   align-items: center;
   gap: 6px;
   color: #e5e5e5;
+  white-space: nowrap;
 }
 
-/* DROPDOWN */
+/* DROPDOWN DESKTOP */
 .dropdown {
   position: absolute;
   top: 140%;
   left: 0;
   background: #0b0d14;
-  border: 1px solid rgba(255,255,255,.1);
+  border: 1px solid rgba(255,255,255,0.1);
   border-radius: 10px;
-  padding: 10px 0;
   min-width: 200px;
   opacity: 0;
   pointer-events: none;
   transform: translateY(10px);
-  transition: .25s ease;
+  transition: 0.25s ease;
+  z-index: 99;
 }
 
 .dropdown a {
@@ -172,32 +195,32 @@ body {
   padding: 10px 16px;
   color: #ccc;
   text-decoration: none;
-  font-size: 14px;
 }
 
 .dropdown a:hover {
-  background: rgba(255,255,255,.06);
+  background: rgba(255,255,255,0.06);
   color: #fff;
 }
 
-.nav-item:hover .dropdown {
-  opacity: 1;
-  pointer-events: auto;
-  transform: translateY(0);
+/* SHOW ON HOVER (DESKTOP) */
+@media (min-width: 1101px) {
+  .nav-item:hover .dropdown {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
 }
 
 /* ACTIONS */
 .nav-actions {
   display: flex;
-  align-items: center;
-  gap: 14px;
+  gap: 12px;
 }
 
 .btn {
-  padding: 10px 18px;
+  padding: 8px 16px;
   border-radius: 999px;
-  font-size: 14px;
-  cursor: pointer;
+  font-size: 13px;
   text-decoration: none;
 }
 
@@ -211,22 +234,18 @@ body {
   color: #1dd6c9;
 }
 
-/* RESPONSIVE */
-@media (max-width: 1100px) {
-  .nav-links {
-    display: none;
-  }
-}
+/* HAMBURGER */
 .hamburger {
   display: none;
   background: none;
   border: none;
-  color: #fff;
   font-size: 24px;
-  cursor: pointer;
+  color: #fff;
 }
 
+/* MOBILE */
 @media (max-width: 1100px) {
+
   .hamburger {
     display: block;
   }
@@ -238,8 +257,8 @@ body {
     width: 100%;
     background: #000;
     flex-direction: column;
-    padding: 20px;
-    gap: 16px;
+    padding: 16px;
+    gap: 14px;
     display: none;
   }
 
@@ -247,23 +266,24 @@ body {
     display: flex;
   }
 
-  .nav-item {
-    justify-content: space-between;
+  .nav-actions {
+    display: none;
   }
 
   .dropdown {
     position: static;
-    transform: none;
     opacity: 1;
-    pointer-events: auto;
+    transform: none;
     display: none;
-    margin-top: 10px;
+    pointer-events: auto;
+    margin-top: 8px;
   }
 
   .nav-item.open .dropdown {
     display: block;
   }
 }
+
 
 
 
@@ -1244,13 +1264,7 @@ body {
         </div>
       </div>
 
-      <div class="nav-item">WHO WE HELP ▾
-        <div class="dropdown">
-          <a href="#">Startups</a>
-          <a href="#">Enterprises</a>
-        </div>
-      </div>
-
+  
       <div class="nav-item">WHO WE ARE ▾
         <div class="dropdown">
           <a href="#">About Us</a>
@@ -2162,21 +2176,24 @@ scroller.addEventListener("mouseout", () => {
 
 //nave bar $ header
 
-const hamburger = document.getElementById('hamburger');
-const navLinks = document.querySelector('.nav-links');
-const navItems = document.querySelectorAll('.nav-item');
+const hamburger = document.getElementById("hamburger");
+  const navLinks = document.querySelector(".nav-links");
+  const navItems = document.querySelectorAll(".nav-item");
 
-hamburger.addEventListener('click', () => {
-  navLinks.classList.toggle('show');
-});
+  // Toggle menu
+  hamburger.onclick = () => {
+    navLinks.classList.toggle("show");
+  };
 
-navItems.forEach(item => {
-  item.addEventListener('click', () => {
-    if (window.innerWidth <= 1100) {
-      item.classList.toggle('open');
-    }
+  // Mobile dropdown toggle
+  navItems.forEach(item => {
+    item.onclick = (e) => {
+      if (window.innerWidth <= 1100) {
+        e.stopPropagation();
+        item.classList.toggle("open");
+      }
+    };
   });
-});
 
   </script>
 </body>
