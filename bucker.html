@@ -18,7 +18,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 12px;
-  margin-top: 14px;
+  margin-top: 20px;
 }
 
 .social-btn {
@@ -104,6 +104,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  
 }
 
 html, body {
@@ -112,6 +113,7 @@ html, body {
   font-family: Arial, sans-serif;
   background: #000;
   color: #fff;
+  
 }
 
 /* HEADER */
@@ -127,7 +129,7 @@ html, body {
 .nav-container {
   max-width: 1280px;
   margin: auto;
-  padding: 6px 16px;
+  padding: 20px 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -155,17 +157,18 @@ html, body {
   font-size: 16px;
   font-weight: 600;
   white-space: nowrap;
+  color: #00e6c2;
 }
 
 /* NAV LINKS */
 .nav-links {
   display: flex;
-  gap: 26px;
+  gap: 30px;
 }
 
 .nav-item {
   position: relative;
-  font-size: 14px;
+  font-size: 12px;                                   /*right pr laker jana hy */
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -329,8 +332,9 @@ body {
 /* FILTER BUTTONS */
 .portfolio-filters {
   display: flex;
-  gap: 18px;
-  flex-wrap: wrap;
+  gap: 5px;
+  flex-wrap: nowrap;      /* 🔥 wrap band */
+  white-space: nowrap;   /* safety */
   margin-bottom: 40px;
 }
 
@@ -506,7 +510,20 @@ body {
 /*services*/
 
 .services {
-  padding: 50px 0;
+  padding: 80px 0;
+  background:
+    radial-gradient(
+      80% 60% at 50% 20%,
+      rgba(19, 232, 221, 0.359),
+      rgba(0, 0, 0, 0.95)
+    ),
+    #000;
+}
+
+.services .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
 .services-title {
@@ -514,24 +531,28 @@ body {
   font-weight: 700;
   margin-bottom: 30px;
   text-align: center;
+  color: #06928b;
 }
 
 .services-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
+  gap: 32px;
 }
 
 .service-card {
   position: relative;
-  border-radius: 15px;
+  border-radius: 16px;
   overflow: hidden;
   cursor: pointer;
+    background: rgba(255,255,255,0.04);
+  backdrop-filter: blur(4px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.4);
 }
 
 .service-card img {
   width: 100%;
-  height: 180px;
+  height: 190px;
   object-fit: cover;
   filter: brightness(0.7);
 }
@@ -540,7 +561,7 @@ body {
   position: absolute;
   bottom: 15px;
   left: 15px;
-  color: #fff;
+  color: #ffffff;
   font-size: 19px;
   font-weight: 600;
 }
@@ -671,8 +692,8 @@ body {
 .brand-strip-section {
   width: 100%;
   overflow: hidden;
-  padding: 80px 0;
-  background:transparent;
+  padding: 10px 0;
+  background:rgb(221, 221, 221);
 }
 
 /* ===== ROW ===== */
@@ -696,7 +717,7 @@ body {
   height: 90px;
   max-width: 140px;
   object-fit: contain;
-  opacity: 0.75;
+  /* opacity: 0.75; */
   /*filter: grayscale(100%);*/
   transition: opacity 1s ease, filter 1s ease;
 }
@@ -708,12 +729,12 @@ body {
 
 /* ===== LEFT MOVE ===== */
 .move-left .brand-strip {
-  animation: scroll-left 5s linear infinite;
+  animation: scroll-left 7s linear infinite;
 }
 
 /* ===== RIGHT MOVE ===== */
 .move-right .brand-strip {
-  animation: scroll-right 5s linear infinite;
+  animation: scroll-right 7s linear infinite;
 }
 
 /* ===== KEYFRAMES ===== */
@@ -1143,7 +1164,7 @@ body {
 .about-image img {
   width: 110%;
   max-width: 480px;
-  border-radius: 60% 40% 55% 45% / 55% 60% 40% 45%;
+  border-radius:  5% ;
   object-fit: cover;
 }
 
@@ -1236,10 +1257,75 @@ body {
   }
 }
 
+/*dark mood  */
 
 
+.theme-toggle {
+  margin: 0 14px;
+}
+
+.theme-toggle input {
+  display: none;
+}
+
+.switch {
+  width: 44px;
+  height: 24px;
+  background: #f9f7f7;
+  border-radius: 20px;
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.switch::after {
+  content: "";
+  width: 18px;
+  height: 18px;
+  background: #0f0f0f;
+  border-radius: 50%;
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  transition: transform 0.3s ease;
+}
+
+input:checked + .switch {
+  background: #111010;
+}
+
+input:checked + .switch::after {
+  transform: translateX(20px);
+  background: #f4f2f2;
+}
+/* Default DARK */
+body {
+  background: #080808;
+  color: #312e2e;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* LIGHT MODE */
+body.light-mode {
+  background: #fff;
+  color: #000;
+}
+
+/* Example elements */
+body.light-mode header {
+  background: #fff;
+}
+
+body.light-mode .nav-item,
+body.light-mode .brand-name {
+  color: #000;
+}
 
 
+.services-label{
+  color: #00e6c2;
+}
 
   </style>
 </head>
@@ -1251,9 +1337,14 @@ body {
     <div class="brand">
       <div class="logo">SI</div>
       <div class="brand-name">
-        Saiyaara Technologies<span class="dot">.</span>
+        Saiyaara Technologies<span class="dot"></span>
       </div>
     </div>
+
+  <div class="theme-toggle">
+  <input type="checkbox" id="themeSwitch">
+  <label for="themeSwitch" class="switch"></label>
+</div>
 
     <!-- CENTER -->
     <nav class="nav-links">
@@ -1265,10 +1356,11 @@ body {
       </div>
 
   
-      <div class="nav-item">WHO WE ARE ▾
+      <div class="nav-item">COMPANY ▾
         <div class="dropdown">
-          <a href="#">About Us</a>
-          <a href="#">Our Team</a>
+          <a href="#">Portfolio</a>
+          <a href="#">How we do</a>
+          <a href="#">Blogs </a>
         </div>
       </div>
 
@@ -1282,14 +1374,14 @@ body {
       <div class="nav-item">JOIN SAIYAARA ▾
         <div class="dropdown">
           <a href="#">Careers</a>
-          <a href="#">Internships</a>
+          <a href="#">FAQs</a>
         </div>
       </div>
     </nav>
 
     <!-- RIGHT -->
     <div class="nav-actions">
-      <a class="btn primary">Explore Careers</a>
+      <a class="btn primary">Apply Now</a>
       <a class="btn outline">Let’s Talk Business</a>
 
       <div class="nav-item lang">Global ▾
@@ -1318,8 +1410,8 @@ body {
         <p class="lead">We design and develop web apps, mobile apps, and brand experiences for startups and enterprises. UX-first, performance-driven, and built to grow.</p>
 
         <div class="hero-actions">
-          <a class="pill btn-primary" href="#contact">Start a project</a>
-          <a class="pill" href="#portfolio" style="background:transparent;border:1px solid rgba(15,23,42,0.06)">See work</a>
+          <a class="pill btn-primary" >Start a project</a>
+          <!-- <a class="pill"  style="background:transparent;border:1px solid rgba(15,23,42,0.06)">See work</a> -->
         </div>
 
         <div class="stats" style="margin-top:22px">
@@ -1390,9 +1482,18 @@ body {
 
 
     <!-- Services -->
+   <br>
+  
+
+
    <section class="services">
-    
-  <h2 class="services-title">Our Services</h2>
+     <div class="container">
+       <div class="services-heading">
+ <span class="services-label">OUR SERVICES</span>
+<h1>Transform Your Business</h1>
+</div>
+
+<br>
 
   <div class="services-grid">
     
@@ -1530,9 +1631,12 @@ body {
       <h3>Automation & RPA</h3>
     </div>
 
+  
   </div>
 
   <button id="viewMoreBtn" class="view-more-btn">View More ↓</button>
+
+  </div>
 </section>
 
 
@@ -1545,7 +1649,7 @@ body {
    
  <section class="portfolio-section">
 
- <h2 class="services-title">Our Worked</h2>
+ <h2 class="services-title">Case Studies </h2>
   <!-- FILTER BUTTONS -->
   <div class="portfolio-filters">
     <button class="active" data-filter="all">All</button>
@@ -1857,13 +1961,15 @@ body {
   </div>
 </section>
 
-
+    <br>
+    <br>
+    <br>
     <!-- Contact -->
     <section id="contact">
       <div class="section-title"><h2>Let's build something together</h2><p class="muted">Tell us about your project and we'll get back within 48 hours.</p></div>
       <div class="contact-grid">
         <div>
-          <div class="card"><div style="font-weight:700">Start a project</div><div class="muted">Email: hello@devsinc.com</div><div class="muted">Phone: +1 (555) 123-4567</div></div>
+          <div class="card"><div style="font-weight:700">Start a project</div><div class="muted">Email: hello@devsinc.com</div><div class="muted">Phone: 03256926265</div></div>
           <div class="card" style="margin-top:12px"><div style="font-weight:700">Office</div><div class="muted">Remote-first — HQ in New York</div></div>
         </div>
 
@@ -1872,7 +1978,7 @@ body {
   <p class="muted">We reply faster on social platforms.</p>
 
   <div class="social-grid">
-    <a href="https://wa.me/1234567890" target="_blank" class="social-btn wa">
+    <a href="https://wa.me/03256926265" target="_blank" class="social-btn wa">
       <i class="fab fa-whatsapp"></i>
       <span>WhatsApp</span>
     </a>
@@ -1895,6 +2001,7 @@ body {
 </div>
       </div>
     </section>
+    <br>
   </main>
 
 <footer class="footer">
@@ -2193,6 +2300,12 @@ const hamburger = document.getElementById("hamburger");
         item.classList.toggle("open");
       }
     };
+  });
+
+  const switcher = document.getElementById("themeSwitch");
+
+  switcher.addEventListener("change", () => {
+    document.body.classList.toggle("light-mode");
   });
 
   </script>
