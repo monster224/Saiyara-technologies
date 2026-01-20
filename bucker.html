@@ -228,13 +228,13 @@ html, body {
 }
 
 .btn.primary {
-  background: #1dd6c9;
+  background: #1d8cd6;
   color: #000;
 }
 
 .btn.outline {
-  border: 1px solid #1dd6c9;
-  color: #1dd6c9;
+  border: 1px solid #1d76d6;
+  color: #1d70d6;
 }
 
 /* HAMBURGER */
@@ -1041,7 +1041,7 @@ body {
 
 .achv-box h3 {
   color: #00d1c5;
-  font-size: 60px;
+  font-size: 50px;
   font-weight: 800;
 }
 
@@ -1441,12 +1441,7 @@ body.light-mode .brand-name {
       <a class="btn primary">Apply Now</a>
       <a class="btn outline">Let’s Talk Business</a>
 
-      <div class="nav-item lang">Global ▾
-        <div class="dropdown">
-          <a href="#">English</a>
-          <a href="#">Urdu</a>
-        </div>
-      </div>
+    
 
       <button id="hamburger" class="hamburger">☰</button>
     </div>
@@ -1805,24 +1800,25 @@ body.light-mode .brand-name {
 
   <div class="achievements-right">
     <div class="achv-box">
-      <h3>3,000+</h3>
-      <p>Successful Projects</p>
-    </div>
+  <h3><span class="counter" data-target="3000">0</span>+</h3>
+  <p>Successful Projects</p>
+</div>
 
-    <div class="achv-box">
-      <h3>23+</h3>
-      <p>Countries Supported</p>
-    </div>
+<div class="achv-box">
+  <h3><span class="counter" data-target="23">0</span>+</h3>
+  <p>Countries Supported</p>
+</div>
 
-    <div class="achv-box">
-      <h3>250+</h3>
-      <p>Active Clients</p>
-    </div>
+<div class="achv-box">
+  <h3><span class="counter" data-target="250">0</span>+</h3>
+  <p>Active Clients</p>
+</div>
 
-    <div class="achv-box">
-      <h3>15+</h3>
-      <p>Years of Enablement Experience</p>
-    </div>
+<div class="achv-box">
+  <h3><span class="counter" data-target="15">0</span>+</h3>
+  <p>Years of Enablement Experience</p>
+</div>
+
   </div>
 </section>
 
@@ -2356,6 +2352,47 @@ const observer = new IntersectionObserver(entries => {
 }, { threshold: 0.6 });
 
 counters.forEach(counter => observer.observe(counter));
+
+// achivment count 
+document.addEventListener("DOMContentLoaded", () => {
+  const counters = document.querySelectorAll(".counter");
+
+  const animateCounter = (counter) => {
+    const target = +counter.dataset.target;
+    let current = 0;
+    counter.innerText = "0";
+
+    const increment = Math.max(1, Math.floor(target / 100));
+
+    const update = () => {
+      current += increment;
+      if (current >= target) {
+        counter.innerText = target.toLocaleString();
+      } else {
+        counter.innerText = current.toLocaleString();
+        requestAnimationFrame(update);
+      }
+    };
+
+    update();
+  };
+
+  const observer = new IntersectionObserver(
+    entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const counter = entry.target.querySelector(".counter");
+          animateCounter(counter);
+        }
+      });
+    },
+    { threshold: 0.6 }
+  );
+
+  document.querySelectorAll(".achv-box").forEach(box => {
+    observer.observe(box);
+  });
+});
 
   </script>
 </body>
